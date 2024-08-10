@@ -11,8 +11,19 @@ import tiktoken
 from itertools import islice
 import requests
 from tenacity import retry, wait_random_exponential, stop_after_attempt
+from sklearn import metrics
 from openai import OpenAI
 
+from dotenv import load_dotenv
+load_dotenv()  # 默认从项目根目录下的.env文件加载
+api_key=os.getenv("OPENAI_API_KEY")
+if api_key is None or api_key == "":
+    print("OPENAI_API_KEY未配置")
+client = OpenAI(api_key=api_key)
+
+api_base=os.getenv("API_BASE","https://api.perplexity.ai")
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 from sklearn import metrics
 
@@ -31,7 +42,7 @@ def api_call(prompt, deployment_name, temperature, max_tokens, top_p):
     - top_p: top p parameter
     """
     time.sleep(5)  # Change to avoid rate limit
-    if deployment_name in ["gpt-35-turbo", "gpt-4", "gpt-3.5-turbo"]:
+    if deployment_name in ["gpt-35-turbo", "gpt-4", "gpt-3.5-turbo","glm-4-air"]:
         response = client.chat.completions.create(
             model=deployment_name,
             temperature=float(temperature),
@@ -65,7 +76,7 @@ def api_call(prompt, deployment_name, temperature, max_tokens, top_p):
             "authorization": PERPLEXITY_API_KEY,
         }
         response = requests.post(
-            "https://api.perplexity.ai/chat/completions", json=payload, headers=headers
+            "https://api.xi-ai.cn/v1/chat/completions", json=payload, headers=headers
         )
         if response.status_code != 200:
             print(response.status_code)
@@ -146,6 +157,7 @@ def generate_tree(topic_list):
             continue
         patterns = regex.match(pattern, topic.strip())
         if patterns.group(4):
+            print(444)
             lvl, label, count, desc = (
                 int(patterns.group(1)),
                 patterns.group(2).strip(),
@@ -153,6 +165,7 @@ def generate_tree(topic_list):
                 patterns.group(4).strip(),
             )
         else:
+            print(444)
             lvl, label, count, desc = (
                 int(patterns.group(1)),
                 patterns.group(2).strip(),

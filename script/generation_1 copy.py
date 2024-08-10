@@ -52,7 +52,6 @@ def prompt_formatting(
         else:
             if verbose:
                 print(f"Too many topics ({topic_len} tokens). Pruning...")
-                print("aaa1"+str(topics_list))
             cos_sim = {}  # topic: cosine similarity w/ document
             doc_emb = sbert.encode(doc, convert_to_tensor=True)
             for top in topics_list:
@@ -73,9 +72,7 @@ def prompt_formatting(
                 else:
                     seed_str += new_seed + "\n"
                     seed_len += num_tokens_from_messages(seed_str, deployment_name)
-            print("aa1"+seed_str)        
             prompt = generation_prompt.format(Document=doc, Topics=seed_str)
-            print("aa2"+prompt)
     else:
         prompt = generation_prompt.format(Document=doc, Topics=topic_str)
     return prompt

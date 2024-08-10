@@ -1,33 +1,27 @@
 You will receive a document and a set of top-level topics from a topic hierarchy. Your task is to identify generalizable topics within the document that can act as top-level topics in the hierarchy. If any relevant topics are missing from the provided set, please add them. Otherwise, output the existing top-level topics as identified in the document.
-
 [Top-level topics]
 {Topics}
 
 [Examples]
-Example 1: Adding "[1] Agriculture"
-Document: 
-Saving Essential American Sailors Act or SEAS Act - Amends the Moving Ahead for Progress in the 21st Century Act (MAP-21) to repeal the Act's repeal of the agricultural export requirements that: (1) 25% of the gross tonnage of certain agricultural commodities or their products exported each fiscal year be transported on U.S. commercial vessels, and (2) the Secretary of Transportation (DOT) finance any increased ocean freight charges incurred in the transportation of such items. Revives and reinstates those repealed requirements to read as if they were never repealed.
+Example 1: set category for document
+Document:
+青秀山，又名青山、泰青岭，位于南宁市的东南面，因林木青翠、山势秀拔而得名。它南临邕江，北与凤凰塔、凤岭、铜鼓岭相连，有大小山岭18座，海拔在83米至289米之间。景区占地面积4.5平方公里，规划面积22平方公里，其中水面面积14667平方米，绿地面积2.5万平方米。景区内山峦起伏，群峰叠翠，泉清石奇，江环如带，林木茂盛，四季葱茏，遮天蔽日，清风吹过时，发出海涛般的声浪，形成青秀山著名一景——青山松涛。
 
-Your response: 
-[1] Agriculture: Mentions policies relating to agricultural practices and products.
+Your response:
+景区/景点-自然风光-山川
 
-Example 2: Duplicate "[1] Trade", returning the existing topic
-Document: 
-Amends the Harmonized Tariff Schedule of the United States to suspend temporarily the duty on mixtures containing Fluopyram.
-
-Your response: 
-[1] Trade: Mentions the exchange of capital, goods, and services.
+Example 2: set topic for document
+Document:
+蛙婆节蛙婆节为东兰、南丹、天峨等县壮族民间传统节日，俗称蚂拐节。节期从农历正月初一至三十，有的地方至十五，以大村寨为单位或几个村寨联合举行，有“请蛙婆”、“唱蛙婆”、“孝蛙婆”、“葬蛙婆”等祭祀仪式。整个节日活动以赞颂蛙神给人间带来雨水、保佑丰收的功绩贯穿始终，为乐神娱神歌舞盛会。人们把大年初一找到的第一只青蛙奉为神圣，抓获此蛙者受到敬重和拥戴，并成为当年主持祭蛙仪式的首领。现代蛙婆节已演变成群众娱乐节庆活动和歌会，故又有“蚂拐歌会”之称。
+Your response:
+民族文化活动-民俗活动-祭祀仪式-仪式意义
 
 [Instructions]
-Step 1: Determine topics mentioned in the document. 
-- The topic labels must be as GENERALIZABLE as possible. They must not be document-specific.
-- The topics must reflect a SINGLE topic instead of a combination of topics.
-- The new topics must have a level number, a short general label, and a topic description. 
-- The topics must be broad enough to accommodate future subtopics. 
-Step 2: Perform ONE of the following operations: 
-1. If there are already duplicates or relevant topics in the hierarchy, output those topics and stop here. 
-2. If the document contains no topic, return "None". 
-3. Otherwise, add your topic as a top-level topic. Stop here and output the added topic(s). DO NOT add any additional levels.
+Step 1: Determine topic mentioned in the document.
+- The topic  must  from my privide  . They must not be New or change .
+- must reCheck the selected cattopicegory if satisfy for the document 
+- reCheck is the selected topic is 
+- every document can  be set multiple  topic  as long as it meets the conditions
 
 
 [Document]
