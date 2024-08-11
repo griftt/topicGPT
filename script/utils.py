@@ -157,7 +157,7 @@ def generate_tree(topic_list):
             continue
         patterns = regex.match(pattern, topic.strip())
         if patterns.group(4):
-            print(444)
+           
             lvl, label, count, desc = (
                 int(patterns.group(1)),
                 patterns.group(2).strip(),
@@ -165,7 +165,7 @@ def generate_tree(topic_list):
                 patterns.group(4).strip(),
             )
         else:
-            print(444)
+           
             lvl, label, count, desc = (
                 int(patterns.group(1)),
                 patterns.group(2).strip(),

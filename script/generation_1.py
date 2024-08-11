@@ -29,9 +29,12 @@ def prompt_formatting(
     - max_top_len: Max length of topics to include in prompt (Modify if necessary)
     """
     sbert = SentenceTransformer("all-MiniLM-L6-v2")
+    
     # Format seed topics to include manually written topics + previously generated topics
-    topic_str = open(seed_file, "r").read() + "\n" + "\n".join(topics_list)
-
+    if(len(topics_list)<=0):
+        topic_str = open(seed_file, "r").read() + "\n" + "\n".join(str(topics_list))
+    else:
+        topic_str = "\n".join(str(topics_list))
     # Calculate length of document, seed topics, and prompt ----
     doc_len = num_tokens_from_messages(doc, deployment_name)
     prompt_len = num_tokens_from_messages(generation_prompt, deployment_name)
@@ -52,11 +55,11 @@ def prompt_formatting(
         else:
             if verbose:
                 print(f"Too many topics ({topic_len} tokens). Pruning...")
-                print("aaa1"+str(topics_list))
             cos_sim = {}  # topic: cosine similarity w/ document
             doc_emb = sbert.encode(doc, convert_to_tensor=True)
             for top in topics_list:
-                top_emb = sbert.encode(top, convert_to_tensor=True)
+                
+                top_emb = sbert.encode(str(top), convert_to_tensor=True)
                 cos_sim[top] = util.cos_sim(top_emb, doc_emb)
             sim_topics = sorted(cos_sim, key=cos_sim.get, reverse=True)
 
@@ -64,18 +67,19 @@ def prompt_formatting(
             seed_len, seed_str = 0, ""
             while seed_len < max_top_len and len(sim_topics) > 0:
                 new_seed = sim_topics.pop(0)
+                single_new_seed=str(new_seed)
                 if (
                     seed_len
-                    + num_tokens_from_messages(new_seed + "\n", deployment_name)
+                    + num_tokens_from_messages(single_new_seed + "\n", deployment_name)
                     > max_top_len
                 ):
                     break
                 else:
-                    seed_str += new_seed + "\n"
+                    seed_str += single_new_seed + "\n"
                     seed_len += num_tokens_from_messages(seed_str, deployment_name)
-            print("aa1"+seed_str)        
+                    
             prompt = generation_prompt.format(Document=doc, Topics=seed_str)
-            print("aa2"+prompt)
+           
     else:
         prompt = generation_prompt.format(Document=doc, Topics=topic_str)
     return prompt

@@ -1,9 +1,8 @@
-You will receive a document and a set of top-level topics from a topic hierarchy. Your task is to identify generalizable topics within the document that can act as top-level topics in the hierarchy. If any relevant topics are missing from the provided set, please add them. Otherwise, output the existing top-level topics as identified in the document.
-[Top-level topics]
+你将获得一份文件和一组根据主题层次结构预定义的多层级主题。你的任务是分析这份文件，并从提供的预定义主题集中选择一个最能代表文档内容的主题。
+[多层级主题]
 {Topics}
-
-[Examples]
-Example 1: set category for document
+[例子]
+Example 1: set topic for document
 Document:
 青秀山，又名青山、泰青岭，位于南宁市的东南面，因林木青翠、山势秀拔而得名。它南临邕江，北与凤凰塔、凤岭、铜鼓岭相连，有大小山岭18座，海拔在83米至289米之间。景区占地面积4.5平方公里，规划面积22平方公里，其中水面面积14667平方米，绿地面积2.5万平方米。景区内山峦起伏，群峰叠翠，泉清石奇，江环如带，林木茂盛，四季葱茏，遮天蔽日，清风吹过时，发出海涛般的声浪，形成青秀山著名一景——青山松涛。
 
@@ -17,15 +16,17 @@ Your response:
 民族文化活动-民俗活动-祭祀仪式-仪式意义
 
 [Instructions]
-Step 1: Determine topic mentioned in the document.
-- The topic  must  from my privide  . They must not be New or change .
-- must reCheck the selected cattopicegory if satisfy for the document 
-- reCheck is the selected topic is 
-- every document can  be set multiple  topic  as long as it meets the conditions
-
-
-[Document]
+分配主题时需要满足如下要求：
+-严格匹配：只能选择预定义的主题集中的主题，不得自行创造或修改主题。
+-主题适用性：选择的主题必须与文档内容紧密相关，能够准确反映文档的主旨。
+-唯一性：如果文档内容与多个主题都有关联，选择最具体、最贴近文档核心的主题。
+-无匹配则不分配：如果文档内容与提供的主题集中的任何主题都不匹配，则不分配主题。
+-多主题分配：每份文档可分配一到4个最符合的主题
+-主题层级完整：主题是有多层级的，请使用层次结构中的最小层级分类进行匹配
+-回答信息格式：主题1-主题2-主题3-主题4,如果该主题1下不存在第四层级，则主题4可以不返回，
+注意：主题1,主题2,主题3,主题4他们都是父子关系且他们都来自前面预定义的主题集合，请不要随意填充或生成
+[文件]
 {Document}
 
-Please ONLY return the relevant or modified topics at the top level in the hierarchy.
+Please ONLY return the most relevant  topics at the top level in the hierarchy.
 [Your response]
